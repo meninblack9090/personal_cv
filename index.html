@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Justin Adam C. Umalay — CV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #FAFAFA;
+    --gutter-bg: #F0F1F3;
+    --gutter-border: #E1E4E8;
+    --ink: #24292E;
+    --comment: #6A737D;
+    --keyword: #005CC5;
+    --string: #22863A;
+    --line-num: #B0B7BD;
+    --highlight: #FFF3B0;
+    --card-bg: #FFFFFF;
+    --border: #E1E4E8;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html, body{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Consolas, monospace;
+    overflow: hidden;
+  }
+
+  body{
+    display: flex;
+    height: 100vh;
+  }
+
+  /* Gutter — like a code editor's line-number column */
+  .gutter{
+    flex: 0 0 auto;
+    width: 40px;
+    height: 100%;
+    background: var(--gutter-bg);
+    border-right: 1px solid var(--gutter-border);
+    padding-top: 6vh;
+    user-select: none;
+  }
+
+  .gutter .num{
+    font-size: 12px;
+    line-height: 20px;
+    color: var(--line-num);
+    text-align: right;
+    padding-right: 10px;
+  }
+
+  @media (max-width: 640px){
+    .gutter{ width: 26px; }
+    .gutter .num{ font-size: 10px; padding-right: 5px; }
+  }
+
+  main{
+    flex: 1 1 auto;
+    max-width: 780px;
+    margin: 0 auto;
+    height: 100%;
+    padding: 0 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  @media (max-width: 640px){
+    main{ padding: 0 16px; gap: 10px; }
+  }
+
+  .filename{
+    color: var(--comment);
+    font-size: 13px;
+    margin: 0;
+  }
+
+  .filename::before{ content: "# "; }
+
+  .docstring{
+    color: var(--comment);
+    font-style: italic;
+    line-height: 20px;
+    font-size: 13px;
+    margin: 0;
+    white-space: pre-wrap;
+  }
+
+  .name{
+    font-style: normal;
+    font-weight: 700;
+    font-size: clamp(19px, 3vw, 26px);
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+
+  .role{
+    font-style: normal;
+    font-weight: 500;
+    color: var(--keyword);
+  }
+
+  .cursor{
+    display: inline-block;
+    width: 7px;
+    height: 14px;
+    background: var(--ink);
+    vertical-align: -2px;
+    margin-left: 2px;
+    animation: blink 1.1s steps(1) infinite;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .cursor{ animation: none; opacity: .6; }
+  }
+  @keyframes blink{ 50%{ opacity: 0; } }
+
+  .row{
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 24px;
+  }
+
+  @media (max-width: 640px){
+    .row{ grid-template-columns: 1fr; gap: 10px; }
+  }
+
+  .col{ min-width: 0; }
+
+  .comment-heading{
+    color: var(--comment);
+    font-size: 13px;
+    margin: 0 0 8px;
+    line-height: 18px;
+  }
+
+  .comment-heading .rule{
+    color: var(--line-num);
+  }
+
+  dl.kv{
+    margin: 0;
+    padding: 10px 14px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 13px;
+    line-height: 20px;
+  }
+
+  dl.kv div{
+    display: flex;
+    gap: 8px;
+  }
+
+  dl.kv dt{
+    color: var(--keyword);
+    flex: 0 0 76px;
+  }
+
+  dl.kv dt::after{ content: ":"; color: var(--comment); }
+
+  dl.kv dd{
+    margin: 0;
+    color: var(--string);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .chips{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 0;
+    list-style: none;
+    margin: 0;
+  }
+
+  .chips li{
+    font-size: 12px;
+    padding: 5px 10px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--string);
+    border-radius: 3px;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .contact-line{
+    font-size: 13px;
+    line-height: 20px;
+    margin: 0 0 10px;
+  }
+
+  .contact-line .key{ color: var(--keyword); }
+  .contact-line .val{ color: var(--string); }
+  .contact-line .punct{ color: var(--comment); }
+
+  .gh-button{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--card-bg);
+    background: var(--ink);
+    padding: 8px 14px;
+    border-radius: 4px;
+    text-decoration: none;
+    border: 1px solid var(--ink);
+  }
+
+  .gh-button:hover, .gh-button:focus-visible{
+    background: #000;
+  }
+
+  .download-button{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 8px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    background: var(--card-bg);
+    padding: 8px 14px;
+    border-radius: 4px;
+    text-decoration: none;
+    border: 1px solid var(--border);
+  }
+
+  .download-button:hover, .download-button:focus-visible{
+    background: var(--gutter-bg);
+  }
+
+  .download-button:focus-visible{
+    outline: 2px solid var(--keyword);
+    outline-offset: 2px;
+  }
+
+  .download-button svg{ width: 14px; height: 14px; fill: currentColor; }
+
+  .gh-button:focus-visible{
+    outline: 2px solid var(--keyword);
+    outline-offset: 2px;
+  }
+
+  .gh-button svg{ width: 14px; height: 14px; fill: currentColor; }
+
+  footer{
+    color: var(--comment);
+    font-size: 12px;
+    margin: 0;
+  }
+
+  ::selection{ background: var(--highlight); }
+</style>
+</head>
+<body>
+
+  <div class="gutter" aria-hidden="true">
+    <div id="gutter-nums"></div>
+  </div>
+
+  <main>
+    <p class="filename">cv.py</p>
+
+    <p class="docstring">"""<br>
+      <span class="name">Justin Adam C. Umalay</span><br>
+      <span class="role">BSIT student, 4th Year — Section 4D</span><br>
+      <br>
+      I am an IT student interested in web development, app development,<br>
+      software development, and UI/UX design. I enjoy learning new<br>
+      technologies and creating projects that improve my skills.<span class="cursor" aria-hidden="true"></span><br>
+      """
+    </p>
+
+    <div class="row">
+      <div class="col">
+        <h2 class="comment-heading"><span class="rule">#</span> --- education ---</h2>
+        <dl class="kv">
+          <div><dt>school</dt><dd>Davao del Norte SC</dd></div>
+          <div><dt>program</dt><dd>BS Info. Technology</dd></div>
+          <div><dt>year</dt><dd>4th Year</dd></div>
+          <div><dt>section</dt><dd>4D</dd></div>
+        </dl>
+      </div>
+      <div class="col">
+        <h2 class="comment-heading"><span class="rule">#</span> --- skills ---</h2>
+        <ul class="chips">
+          <li>Web Dev("vibe coding")</li>
+          <li>App Dev("vibe coding")</li>
+          <li>UI / UX Design("vibe coding")</li>
+          <li>Layout &amp; Visual Design</li>
+          <li>AI-assisted Dev ("vibe coding")</li>
+          <li>Networking (basics)</li>
+          <li>Cybersecurity (basics)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <h2 class="comment-heading"><span class="rule">#</span> --- contact ---</h2>
+      <p class="contact-line">
+        <span class="punct">{</span> <span class="key">"github"</span><span class="punct">:</span> <span class="val">"meninblack9090"</span> <span class="punct">}</span>
+      </p>
+      <a class="gh-button" href="https://github.com/meninblack9090" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"></path></svg>
+        View on GitHub
+      </a>
+      <a class="download-button" id="download-cv" href="#" download="Justin-Adam-C-Umalay-CV.html">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1a.75.75 0 0 1 .75.75v7.69l2.22-2.22a.75.75 0 1 1 1.06 1.06l-3.5 3.5a.75.75 0 0 1-1.06 0l-3.5-3.5a.75.75 0 1 1 1.06-1.06l2.22 2.22V1.75A.75.75 0 0 1 8 1ZM2.75 13.5a.75.75 0 0 1 0 1.5h10.5a.75.75 0 0 1 0-1.5H2.75Z"></path></svg>
+        Download CV
+      </a>
+    </div>
+
+    <footer>saved • cv.py</footer>
+  </main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+  (function(){
+    var gutter = document.getElementById('gutter-nums');
+    var lineHeight = 20;
+    var total = Math.ceil(window.innerHeight / lineHeight) + 1;
+    var html = '';
+    for (var i = 1; i <= total; i++){
+      html += '<div class="num">' + (i < 10 ? '0' + i : i) + '</div>';
+    }
+    gutter.innerHTML = html;
+  })();
+
+  document.getElementById('download-cv').addEventListener('click', function(event){
+    event.preventDefault();
+    var PDF = window.jspdf && window.jspdf.jsPDF;
+
+    if (!PDF){
+      window.print();
+      return;
+    }
+
+    var pdf = new PDF({ unit: 'mm', format: 'a4' });
+    var lines = [
+      'JUSTIN ADAM C. UMALAY',
+      'BSIT student, 4th Year - Section 4D',
+      '',
+      'ABOUT',
+      'IT student interested in web development, app development,',
+      'software development, and UI/UX design.',
+      '',
+      'EDUCATION',
+      'School:   Davao del Norte SC',
+      'Program:  BS Information Technology',
+      'Year:     4th Year',
+      'Section:  4D',
+      '',
+      'SKILLS',
+      'Web development, app development, UI/UX design,',
+      'layout and visual design, AI-assisted development,',
+      'networking basics, cybersecurity basics.',
+      '',
+      'CONTACT',
+      'GitHub: github.com/meninblack9090'
+    ];
+
+    pdf.setFont('courier', 'normal');
+    pdf.setFontSize(11);
+    pdf.text(lines, 20, 25, { lineHeightFactor: 1.6 });
+    pdf.save('Justin-Adam-C-Umalay-CV.pdf');
+  });
+</script>
+</body>
+</html>
